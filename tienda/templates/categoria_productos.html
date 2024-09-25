@@ -1,0 +1,94 @@
+{% extends 'layout.html' %}
+
+{% block title %}Productos en {{ categoria.nombre }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="categoria-titulo">Productos en la categoría: {{ categoria.nombre }}</h1>
+
+    <style>
+        .card {
+            border: 1px solid #dee2e6; 
+            border-radius: 10px; 
+            margin: 20px auto;
+            max-width: 350px; 
+            height: 100%; 
+        }
+    
+        .card-img-top {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            height: 200px; 
+            object-fit: cover; 
+        }
+    
+        .card-body {
+            padding: 20px;
+        }
+    
+        .card-footer {
+            background-color: #f8f9fa; 
+            padding: 15px; 
+        }
+
+        .center-button {
+            text-align: center; 
+            margin-top: 20px; 
+            margin-bottom: 15px;
+        }
+
+        .center-button a {
+            border-radius: 20px; 
+            border: 2px solid black; 
+            color: black;
+            padding: 10px 20px;
+            text-decoration: none; 
+            transition: background-color 0.3s; 
+        }
+
+        .center-button a:hover {
+            background-color: white;
+            color: black;
+        }
+
+        .categoria-titulo {
+            text-align: center;       
+            margin-top: 250px;       
+            margin-bottom: 40px;     
+            font-size: 2em;          
+            color: #333;            
+            padding: 0;            
+        }
+    </style>
+
+    <div class="row">
+        {% for producto in productos %}
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+                <a href="{% url 'tienda:producto' producto.id %}">
+                    <img class="card-img-top" src="http://placehold.it/700x400" alt="{{ producto.nombre }}">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">{{ producto.nombre }}</h5>
+                    <p class="card-text">{{ producto.descripcion }}</p>
+                    <h6 class="card-price">${{ producto.precio }}</h6>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'tienda:producto' producto.id %}" class="btn btn-primary">Ver Detalles</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-warning" role="alert">
+                No hay productos en esta categoría.
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="center-button">
+        <a href="{% url 'tienda:index' %}" class="btn btn-white">Volver a la tienda</a>
+    </div>
+</div>
+{% endblock %}

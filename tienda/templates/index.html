@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+
+{% block title %}Tec-Shop{% endblock %}
+
+{% block content %}
+<div class="row">
+
+    <!-- Sidebar de categorías -->
+    <div class="col-lg-3 col-md-4">
+        <div class="sidebar">
+            <h2>Categorías</h2>
+            <ul class="list-group">
+                {% for categoria in categorias %}
+                    <li class="list-group-item">
+                        <a href="{% url 'tienda:categoria_productos' categoria.id %}">{{ categoria.nombre }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Productos -->
+    <div class="col-lg-9 col-md-8">
+        <div class="row">
+            {% for prod in product_list %}
+            <div style="margin-top:80px" class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                    <a href="producto/{{ prod.id }}/">
+                        <img class="card-img-top" src="http://placehold.it/700x400" alt="">
+                    </a>
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            <a href="producto/{{ prod.id }}/">{{ prod.nombre }}</a>
+                        </h4>
+                        <h5>${{ prod.precio }}</h5>
+                        <p class="card-text">Categoría: {{ prod.categoria.nombre }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <!-- Puedes agregar botones u opciones adicionales aquí -->
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
